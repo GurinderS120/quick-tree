@@ -18,6 +18,7 @@ import RectangleNode from "./components/RectangleNode.js";
 import TriangleNode from "./components/TriangleNode.js";
 import HexagonNode from "./components/HexagonNode.js";
 import EllipseNode from "./components/EllipseNode.js";
+import DiamondNode from "./components/DiamondNode.js";
 
 // register you custom nodes
 const nodeTypes = {
@@ -27,6 +28,7 @@ const nodeTypes = {
   triangle: TriangleNode,
   hexagon: HexagonNode,
   ellipse: EllipseNode,
+  diamond: DiamondNode,
 };
 
 const initialNodes = [
@@ -67,6 +69,12 @@ const initialNodes = [
     position: { x: 350, y: 100 },
     data: { label: "ellipse" },
     type: "ellipse",
+  },
+  {
+    id: "9",
+    position: { x: 400, y: 100 },
+    data: { label: "diamond" },
+    type: "diamond",
   },
 ];
 
