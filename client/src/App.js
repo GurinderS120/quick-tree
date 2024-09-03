@@ -12,6 +12,7 @@ import {
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
+
 import CircleNode from "./components/CircleNode.js";
 import SquareNode from "./components/SquareNode.js";
 import RectangleNode from "./components/RectangleNode.js";
@@ -19,6 +20,7 @@ import TriangleNode from "./components/TriangleNode.js";
 import HexagonNode from "./components/HexagonNode.js";
 import EllipseNode from "./components/EllipseNode.js";
 import DiamondNode from "./components/DiamondNode.js";
+import RoundedRectangleNode from "./components/RoundRectangleNode.js";
 
 // register you custom nodes
 const nodeTypes = {
@@ -29,6 +31,7 @@ const nodeTypes = {
   hexagon: HexagonNode,
   ellipse: EllipseNode,
   diamond: DiamondNode,
+  roundedRectangle: RoundedRectangleNode,
 };
 
 const initialNodes = [
@@ -75,6 +78,12 @@ const initialNodes = [
     position: { x: 400, y: 100 },
     data: { label: "diamond" },
     type: "diamond",
+  },
+  {
+    id: "10",
+    position: { x: 450, y: 100 },
+    data: { label: "roundedRectangle" },
+    type: "roundedRectangle",
   },
 ];
 
