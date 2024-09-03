@@ -13,10 +13,12 @@ import {
 
 import "@xyflow/react/dist/style.css";
 import CircleNode from "./components/CircleNode.js";
+import SquareNode from "./components/SquareNode.js";
 
 // register you custom nodes
 const nodeTypes = {
   circle: CircleNode,
+  square: SquareNode,
 };
 
 const initialNodes = [
@@ -27,6 +29,12 @@ const initialNodes = [
     position: { x: 50, y: 100 },
     data: { label: "circle" },
     type: "circle",
+  },
+  {
+    id: "4",
+    position: { x: 150, y: 100 },
+    data: { label: "square" },
+    type: "square",
   },
 ];
 
