@@ -13,14 +13,14 @@ import {
 
 import "@xyflow/react/dist/style.css";
 
-import CircleNode from "./components/CircleNode.js";
-import SquareNode from "./components/SquareNode.js";
-import RectangleNode from "./components/RectangleNode.js";
-import TriangleNode from "./components/TriangleNode.js";
-import HexagonNode from "./components/HexagonNode.js";
-import EllipseNode from "./components/EllipseNode.js";
-import DiamondNode from "./components/DiamondNode.js";
-import RoundedRectangleNode from "./components/RoundRectangleNode.js";
+import CircleNode from "./components/nodeShapes/Circle.js";
+import SquareNode from "./components/nodeShapes/Square.js";
+import RectangleNode from "./components/nodeShapes/Rectangle.js";
+import TriangleNode from "./components/nodeShapes/Triangle.js";
+import HexagonNode from "./components/nodeShapes/Hexagon.js";
+import EllipseNode from "./components/nodeShapes/Ellipse.js";
+import DiamondNode from "./components/nodeShapes/Diamond.js";
+import RoundedRectangleNode from "./components/nodeShapes/RoundedRectangle.js";
 
 // register you custom nodes
 const nodeTypes = {

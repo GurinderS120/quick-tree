@@ -12,7 +12,7 @@ const rectangleStyles = {
   textAlign: "center",
 };
 
-function RectangleNode() {
+function Rectangle() {
   return (
     <div style={rectangleStyles}>
       <Handle type="source" position={Position.Bottom} id="a" />
@@ -20,4 +20,4 @@ function RectangleNode() {
   );
 }
 
-export default RectangleNode;
+export default Rectangle;

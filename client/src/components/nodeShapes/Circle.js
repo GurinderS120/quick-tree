@@ -1,9 +1,9 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
 
-const ellipseStyles = {
-  width: 150,
-  height: 75,
+const circleStyles = {
+  width: 100,
+  height: 100,
   borderRadius: "50%",
   backgroundColor: "#eee",
   border: "2px solid #222",
@@ -13,12 +13,12 @@ const ellipseStyles = {
   textAlign: "center",
 };
 
-function EllipseNode() {
+function Circle() {
   return (
-    <div style={ellipseStyles}>
+    <div style={circleStyles}>
       <Handle type="source" position={Position.Bottom} id="a" />
     </div>
   );
 }
 
-export default EllipseNode;
+export default Circle;

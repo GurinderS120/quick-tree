@@ -20,7 +20,7 @@ const handleStyles = {
   transform: "translate(-50%, -50%)",
 };
 
-function TriangleNode() {
+function Triangle() {
   return (
     <div style={triangleStyles}>
       <Handle
@@ -33,4 +33,4 @@ function TriangleNode() {
   );
 }
 
-export default TriangleNode;
+export default Triangle;

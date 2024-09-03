@@ -1,24 +1,24 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
 
-const circleStyles = {
-  width: 100,
-  height: 100,
-  borderRadius: "50%",
+const roundedRectangleStyles = {
+  width: "150px",
+  height: "75px",
   backgroundColor: "#eee",
   border: "2px solid #222",
+  borderRadius: "15px", // Rounded corners
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   textAlign: "center",
 };
 
-function CircleNode() {
+function RoundedRectangle() {
   return (
-    <div style={circleStyles}>
+    <div style={roundedRectangleStyles}>
       <Handle type="source" position={Position.Bottom} id="a" />
     </div>
   );
 }
 
-export default CircleNode;
+export default RoundedRectangle;

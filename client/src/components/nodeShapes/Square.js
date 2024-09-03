@@ -12,7 +12,7 @@ const squareStyles = {
   textAlign: "center",
 };
 
-function SquareNode() {
+function Square() {
   return (
     <div style={squareStyles}>
       <Handle type="source" position={Position.Bottom} id="a" />
@@ -20,4 +20,4 @@ function SquareNode() {
   );
 }
 
-export default SquareNode;
+export default Square;

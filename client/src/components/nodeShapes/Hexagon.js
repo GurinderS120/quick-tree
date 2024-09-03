@@ -33,7 +33,7 @@ const hexagonAfterStyles = {
   bottom: "-27.5px",
 };
 
-function HexagonNode() {
+function Hexagon() {
   return (
     <div style={{ position: "relative", width: "100px", margin: "0 auto" }}>
       <div style={hexagonBeforeStyles}></div>
@@ -45,4 +45,4 @@ function HexagonNode() {
   );
 }
 
-export default HexagonNode;
+export default Hexagon;

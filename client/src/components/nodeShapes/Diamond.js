@@ -17,7 +17,7 @@ const contentStyles = {
   transform: "rotate(-45deg)", // Rotate content back to normal
 };
 
-function DiamondNode() {
+function Diamond() {
   return (
     <div style={diamondStyles}>
       <div style={contentStyles}>
@@ -29,4 +29,4 @@ function DiamondNode() {
   );
 }
 
-export default DiamondNode;
+export default Diamond;
