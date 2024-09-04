@@ -22,6 +22,8 @@ import EllipseNode from "./components/nodeShapes/Ellipse.js";
 import DiamondNode from "./components/nodeShapes/Diamond.js";
 import RoundedRectangleNode from "./components/nodeShapes/RoundedRectangle.js";
 
+import ShapeSelector from "./components/ShapeSelector.js";
+
 // register you custom nodes
 const nodeTypes = {
   circle: CircleNode,
@@ -101,9 +103,13 @@ function App() {
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
+      {/* Move ShapeSelector outside ReactFlow temporarily to test */}
+      {/* <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+        <ShapeSelector />
+      </div> */}
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        // nodes={nodes}
+        // edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         // onConnect allows us to connect nodes manually via an edge
@@ -111,15 +117,9 @@ function App() {
         nodeTypes={nodeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
       >
-        <Panel position="top-left">
-          <button>shapes</button>
-          <button>add node</button>
-        </Panel>
-        <Controls>
-          <ControlButton
-            onClick={() => alert("Something magical just happened. ✨")}
-          >
-            <button>shapes</button>
+        <Controls position="bottom-left">
+          <ControlButton>
+            <ShapeSelector />
           </ControlButton>
         </Controls>
         <MiniMap />
