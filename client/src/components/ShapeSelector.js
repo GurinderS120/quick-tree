@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-
 import SvgIcon from "@mui/material/SvgIcon";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
 
 const shapes = [
   {
@@ -96,7 +100,7 @@ function ShapeSelector() {
   const id = open ? "shape-popover" : undefined;
 
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
+    <Box>
       <selectedShape.Icon onClick={handleIconClick} />
 
       <Popover
@@ -113,40 +117,33 @@ function ShapeSelector() {
           horizontal: "left",
         }}
       >
-        <div
-          style={{
-            padding: "10px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <List component="nav">
           {shapes.map((shape) => (
-            <div
-              key={shape.id}
-              onClick={() => handleShapeClick(shape)}
-              style={{
-                margin: "5px 0",
-                padding: "5px",
-                cursor: "pointer",
-                backgroundColor:
-                  shape.id === selectedShape.id ? "#ddd" : "#fff",
-                border:
-                  shape.id === selectedShape.id
-                    ? "2px solid #222"
-                    : "1px solid #ccc",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <shape.Icon />
-              <Typography variant="body1" style={{ marginLeft: "10px" }}>
-                {shape.label}
-              </Typography>
-            </div>
+            <React.Fragment key={shape.id}>
+              <ListItem
+                button="true"
+                onClick={() => handleShapeClick(shape)}
+                sx={(theme) => ({
+                  backgroundColor:
+                    shape.id === selectedShape.id
+                      ? theme.palette.action.selected
+                      : "inherit",
+                  "&.Mui-selected:hover": {
+                    backgroundColor: theme.palette.action.hover,
+                  },
+                })}
+              >
+                <ListItemIcon>
+                  <shape.Icon />
+                </ListItemIcon>
+                <ListItemText primary={shape.label} />
+              </ListItem>
+              <Divider />
+            </React.Fragment>
           ))}
-        </div>
+        </List>
       </Popover>
-    </div>
+    </Box>
   );
 }
 
