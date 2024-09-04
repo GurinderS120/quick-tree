@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -7,11 +7,12 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
-  Panel,
   ControlButton,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
+
+import Box from "@mui/material/Box";
 
 import CircleNode from "./components/nodeShapes/Circle.js";
 import SquareNode from "./components/nodeShapes/Square.js";
@@ -36,80 +37,66 @@ const nodeTypes = {
   roundedRectangle: RoundedRectangleNode,
 };
 
-const initialNodes = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
-  {
-    id: "3",
-    position: { x: 50, y: 100 },
-    data: { label: "circle" },
-    type: "circle",
-  },
-  {
-    id: "4",
-    position: { x: 150, y: 100 },
-    data: { label: "square" },
-    type: "square",
-  },
-  {
-    id: "5",
-    position: { x: 200, y: 100 },
-    data: { label: "rectangle" },
-    type: "rectangle",
-  },
-  {
-    id: "6",
-    position: { x: 250, y: 100 },
-    data: { label: "triangle" },
-    type: "triangle",
-  },
-  {
-    id: "7",
-    position: { x: 300, y: 100 },
-    data: { label: "hexagon" },
-    type: "hexagon",
-  },
-  {
-    id: "8",
-    position: { x: 350, y: 100 },
-    data: { label: "ellipse" },
-    type: "ellipse",
-  },
-  {
-    id: "9",
-    position: { x: 400, y: 100 },
-    data: { label: "diamond" },
-    type: "diamond",
-  },
-  {
-    id: "10",
-    position: { x: 450, y: 100 },
-    data: { label: "roundedRectangle" },
-    type: "roundedRectangle",
-  },
-];
-
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 const defaultEdgeOptions = { animated: true };
 
 function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [selectedNode, setSelectedNode] = useState(null);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
+  // Handle node creation when clicking on the canvas
+  const handleCanvasClick = useCallback(
+    (event) => {
+      if (selectedNode) {
+        const newNode = {
+          id: `${selectedNode.id}-${nodes.length + 1}`,
+          type: selectedNode.id,
+          position: {
+            x: cursorPosition.x,
+            y: cursorPosition.y,
+          },
+          data: { label: `${selectedNode.label} Node` },
+        };
+        setNodes((nds) => nds.concat(newNode));
+        setSelectedNode(null); // Reset after placing the node
+      }
+    },
+    [selectedNode, cursorPosition, nodes.length, setNodes]
+  );
+
+  const handleMouseMove = useCallback((event) => {
+    setCursorPosition({
+      x: event.clientX,
+      y: event.clientY,
+    });
+  }, []);
+
+  // Handle right-click to cancel node placement
+  const handleRightClick = useCallback((event) => {
+    event.preventDefault(); // Prevent the default context menu
+    setSelectedNode(null); // Cancel the current shape placement
+  }, []);
+
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      {/* Move ShapeSelector outside ReactFlow temporarily to test */}
-      {/* <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-        <ShapeSelector />
-      </div> */}
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+      }}
+      onMouseMove={handleMouseMove}
+      onClick={handleCanvasClick}
+      onContextMenu={handleRightClick} // Handle right-click
+    >
       <ReactFlow
-        // nodes={nodes}
-        // edges={edges}
+        nodes={nodes}
+        edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         // onConnect allows us to connect nodes manually via an edge
@@ -119,13 +106,29 @@ function App() {
       >
         <Controls position="bottom-left">
           <ControlButton>
-            <ShapeSelector />
+            <ShapeSelector setSelectedNode={setSelectedNode} />
           </ControlButton>
         </Controls>
         <MiniMap />
         <Background variant="dots" gap={12} size={1} />
       </ReactFlow>
-    </div>
+
+      {selectedNode && (
+        <Box
+          sx={{
+            position: "absolute",
+            left: cursorPosition.x,
+            top: cursorPosition.y,
+            pointerEvents: "none", // Prevent blocking other mouse events
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <selectedNode.Icon
+            sx={{ fontSize: "40px", color: "rgba(0, 0, 0, 0.5)" }}
+          />
+        </Box>
+      )}
+    </Box>
   );
 }
 

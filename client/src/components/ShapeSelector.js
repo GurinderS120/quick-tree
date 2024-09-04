@@ -83,7 +83,7 @@ const shapes = [
   },
 ];
 
-function ShapeSelector() {
+function ShapeSelector({ setSelectedNode }) {
   const [selectedShape, setSelectedShape] = useState(shapes[0]);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -93,6 +93,7 @@ function ShapeSelector() {
 
   const handleShapeClick = (shape) => {
     setSelectedShape(shape);
+    setSelectedNode(shape);
     setAnchorEl(null);
   };
 
