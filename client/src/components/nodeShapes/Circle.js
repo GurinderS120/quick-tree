@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Handle, Position } from "@xyflow/react";
 import SvgIcon from "@mui/material/SvgIcon";
 
@@ -30,6 +30,7 @@ function Circle() {
   const [isSelected, setIsSelected] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [initialMousePosition, setInitialMousePosition] = useState(null);
+  const nodeRef = useRef(null);
 
   // Handle the start of resizing (when the user clicks on the resize handle)
   const handleResizeStart = (e) => {
@@ -72,10 +73,35 @@ function Circle() {
 
     // Cleanup event listeners when the component is unmounted or resized stops
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      if (isResizing) {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      }
     };
   }, [isResizing, handleMouseMove, handleMouseUp]);
+
+  // Detect clicks outside of the node to unselect it
+  const handleClickOutside = useCallback(
+    (event) => {
+      if (nodeRef.current && !nodeRef.current.contains(event.target)) {
+        setIsSelected(false); // Deselect the node when clicking outside
+      }
+    },
+    [nodeRef]
+  );
+
+  // Add/remove event listeners for mousedown, which is used to check if a user clicked outside the selected node - for now this only works if a user uses right-mouse click, since ReactFlow interally uses the left-mouse click
+  useEffect(() => {
+    if (isSelected) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      if (isSelected) {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
+  }, [isSelected, handleClickOutside]);
 
   // Handle node selection when clicked
   const handleNodeClick = (e) => {
@@ -116,7 +142,11 @@ function Circle() {
   };
 
   return (
-    <div style={{ position: "relative" }} onClick={handleNodeClick}>
+    <div
+      style={{ position: "relative" }}
+      ref={nodeRef}
+      onClick={handleNodeClick}
+    >
       {/* If the node is selected, show the selection box */}
       {isSelected && <div style={selectionBoxStyles}></div>}
       {/* "nodrag" class prevents the ReactFlow from moving the node that we are trying to resize */}
