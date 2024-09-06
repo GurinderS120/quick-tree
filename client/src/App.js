@@ -45,6 +45,8 @@ function App() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
+  // adding event handlers without "useCallback" can cause infinite re-renders when
+  // using reactFlow
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
@@ -95,6 +97,7 @@ function App() {
       onContextMenu={handleRightClick} // Handle right-click
     >
       <ReactFlow
+        // use defaultNodes prop helped to solve the "resizeObserver" error
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
