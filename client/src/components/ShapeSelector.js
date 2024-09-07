@@ -19,15 +19,6 @@ const shapes = [
     ),
   },
   {
-    id: "square",
-    label: "Square",
-    Icon: (props) => (
-      <SvgIcon {...props}>
-        <rect x="4" y="4" width="16" height="16" />
-      </SvgIcon>
-    ),
-  },
-  {
     id: "rectangle",
     label: "Rectangle",
     Icon: (props) => (
@@ -69,15 +60,6 @@ const shapes = [
     Icon: (props) => (
       <SvgIcon {...props}>
         <rect x="4" y="8" width="16" height="8" rx="4" ry="4" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "ellipse",
-    label: "Ellipse",
-    Icon: (props) => (
-      <SvgIcon {...props}>
-        <ellipse cx="12" cy="12" rx="10" ry="6" />
       </SvgIcon>
     ),
   },
