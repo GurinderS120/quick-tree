@@ -14,29 +14,10 @@ import "@xyflow/react/dist/style.css";
 
 import Box from "@mui/material/Box";
 
-import CircleNode from "./components/nodeShapes/Circle.js";
-import SquareNode from "./components/nodeShapes/Square.js";
-import RectangleNode from "./components/nodeShapes/Rectangle.js";
-import TriangleNode from "./components/nodeShapes/Triangle.js";
-import HexagonNode from "./components/nodeShapes/Hexagon.js";
-import EllipseNode from "./components/nodeShapes/Ellipse.js";
-import DiamondNode from "./components/nodeShapes/Diamond.js";
-import RoundedRectangleNode from "./components/nodeShapes/RoundedRectangle.js";
-
 import ShapeSelector from "./components/ShapeSelector.js";
+import AbstractNode from "./components/AbstractNode.js";
 
-// register you custom nodes
-const nodeTypes = {
-  circle: CircleNode,
-  square: SquareNode,
-  rectangle: RectangleNode,
-  triangle: TriangleNode,
-  hexagon: HexagonNode,
-  ellipse: EllipseNode,
-  diamond: DiamondNode,
-  roundedRectangle: RoundedRectangleNode,
-};
-
+const nodeTypes = { abstractNode: AbstractNode };
 const defaultEdgeOptions = { animated: true };
 
 function App() {
@@ -58,12 +39,15 @@ function App() {
       if (selectedNode) {
         const newNode = {
           id: `${selectedNode.id}-${nodes.length + 1}`,
-          type: selectedNode.id,
+          type: "abstractNode",
           position: {
             x: cursorPosition.x,
             y: cursorPosition.y,
           },
-          data: { label: `${selectedNode.label} Node` },
+          data: {
+            label: `${selectedNode.label} Node`,
+            nodeShape: selectedNode.id,
+          },
         };
         setNodes((nds) => nds.concat(newNode));
         setSelectedNode(null); // Reset after placing the node
