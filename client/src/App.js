@@ -97,6 +97,7 @@ function App() {
         // onConnect allows us to connect nodes manually via an edge
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        connectionMode="loose"
         defaultEdgeOptions={defaultEdgeOptions}
       >
         <Controls position="bottom-left">

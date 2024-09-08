@@ -8,7 +8,7 @@ const handleStyles = {
   transform: "translate(-50%, -50%)",
 };
 
-function Triangle({ size }) {
+function Triangle({ size, isSelected }) {
   const triangleStyles = {
     width: `${size.width}px`,
     height: `${size.height}px`,
@@ -23,10 +23,16 @@ function Triangle({ size }) {
   return (
     <div style={triangleStyles}>
       <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
         type="source"
         position={Position.Bottom}
         id="a"
-        style={handleStyles}
+      />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Top}
+        id="d"
       />
     </div>
   );

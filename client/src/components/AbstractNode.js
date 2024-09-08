@@ -157,7 +157,8 @@ function AbstractNode({ data }) {
           onMouseDownCapture={handleResizeStart}
         />
       )}
-      <SelectedNode size={size} />
+      {/* isSelected prop will be used to display handles when a node is selected */}
+      <SelectedNode size={size} isSelected={isSelected} />
     </div>
   );
 }

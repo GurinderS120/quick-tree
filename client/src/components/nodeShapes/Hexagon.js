@@ -1,7 +1,7 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
 
-function Hexagon({ size }) {
+function Hexagon({ size, isSelected }) {
   const hexagonStyles = {
     width: size.width,
     height: size.height,
@@ -16,7 +16,18 @@ function Hexagon({ size }) {
 
   return (
     <div style={hexagonStyles}>
-      <Handle type="source" position={Position.Bottom} id="a" />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Bottom}
+        id="a"
+      />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Top}
+        id="d"
+      />
     </div>
   );
 }

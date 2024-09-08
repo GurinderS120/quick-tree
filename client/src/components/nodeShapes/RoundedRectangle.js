@@ -1,7 +1,7 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
 
-function RoundedRectangle({ size }) {
+function RoundedRectangle({ size, isSelected }) {
   const roundedRectangleStyles = {
     width: size.width,
     height: size.height,
@@ -17,7 +17,18 @@ function RoundedRectangle({ size }) {
 
   return (
     <div style={roundedRectangleStyles}>
-      <Handle type="source" position={Position.Bottom} id="a" />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Bottom}
+        id="a"
+      />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Top}
+        id="d"
+      />
     </div>
   );
 }

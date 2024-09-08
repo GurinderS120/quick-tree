@@ -1,7 +1,7 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
 
-function Rectangle({ size }) {
+function Rectangle({ size, isSelected }) {
   const rectangleStyles = {
     width: size.width,
     height: size.height,
@@ -16,7 +16,18 @@ function Rectangle({ size }) {
 
   return (
     <div style={rectangleStyles}>
-      <Handle type="source" position={Position.Bottom} id="a" />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Bottom}
+        id="a"
+      />
+      <Handle
+        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        type="source"
+        position={Position.Top}
+        id="d"
+      />
     </div>
   );
 }
