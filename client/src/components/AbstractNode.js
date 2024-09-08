@@ -7,8 +7,6 @@ const restrictiveShapes = ["diamond"];
 function topSelectionBoxStyle(shape, size) {
   if (shape === "diamond") {
     return -(Math.sqrt(2) * size.height - size.height) / 2 - 5;
-  } else if (shape === "hexagon") {
-    return -(size.width * 0.275) - 5; // Move up by half the triangle height (which is 0.275 of the width)
   } else {
     return -5;
   }
@@ -33,8 +31,6 @@ function widthSelectionBoxStyle(shape, size) {
 function heightSelectionBoxStyle(shape, size) {
   if (shape === "diamond") {
     return Math.sqrt(2) * size.height + 10; // Adjust the height for diamond
-  } else if (shape === "hexagon") {
-    return size.width * 1.1 + 10; // Height should be 1.1 times the width (middle rectangle + top/bottom triangles)
   } else {
     return size.height + 10;
   }
