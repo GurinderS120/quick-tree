@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import nodeShapes from "../NodeShapes";
+import nodeShapes from "../nodeShapes.js";
 
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
 const restrictiveShapes = [];
