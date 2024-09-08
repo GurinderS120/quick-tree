@@ -8,6 +8,7 @@ import {
   useEdgesState,
   addEdge,
   ControlButton,
+  MarkerType,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
@@ -18,7 +19,14 @@ import ShapeSelector from "./components/ShapeSelector.js";
 import AbstractNode from "./components/AbstractNode.js";
 
 const nodeTypes = { abstractNode: AbstractNode };
-const defaultEdgeOptions = { animated: true };
+
+// We can use this object to define an edge's starting and or ending characteristics
+const edgeMarker = {
+  type: MarkerType.ArrowClosed,
+  color: "blue",
+};
+
+const defaultEdgeOptions = { animated: false, markerEnd: edgeMarker };
 
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
