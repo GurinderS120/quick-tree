@@ -10,15 +10,14 @@ const handleStyles = {
 
 function Triangle({ size }) {
   const triangleStyles = {
-    width: 0,
-    height: 0,
-    borderLeft: `${size.width / 2}px solid transparent`,
-    borderRight: `${size.width / 2}px solid transparent`,
-    borderBottom: `${size.height}px solid #eee`,
+    width: `${size.width}px`,
+    height: `${size.height}px`,
+    backgroundColor: "#eee",
+    clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)", // Creates the triangle shape
+    position: "relative",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
   };
 
   return (
