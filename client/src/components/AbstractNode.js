@@ -143,7 +143,7 @@ function AbstractNode({ data }) {
     width: widthSelectionBoxStyle(data["nodeShape"], size),
     height: heightSelectionBoxStyle(data["nodeShape"], size),
     border: "2px dashed blue",
-    cursor: "default",
+    cursor: "pointer",
   };
 
   return (
