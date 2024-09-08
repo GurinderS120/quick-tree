@@ -1,12 +1,6 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
-
-const handleStyles = {
-  position: "absolute",
-  top: "75%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
+import nodeHandleStyles from "../../nodeHandleStyles";
 
 function Triangle({ size, isSelected }) {
   const triangleStyles = {
@@ -20,16 +14,21 @@ function Triangle({ size, isSelected }) {
     justifyContent: "center",
   };
 
+  const handleStyles = {
+    ...nodeHandleStyles,
+    visibility: isSelected ? "visible" : "hidden",
+  };
+
   return (
     <div style={triangleStyles}>
       <Handle
-        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        style={{ ...handleStyles, bottom: 3 }}
         type="source"
         position={Position.Bottom}
         id="a"
       />
       <Handle
-        style={{ visibility: isSelected ? "visible" : "hidden" }}
+        style={{ ...handleStyles, top: 8 }}
         type="source"
         position={Position.Top}
         id="d"
