@@ -1,29 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import SvgIcon from "@mui/material/SvgIcon";
 import nodeShapes from "../NodeShapes";
-
-function ResizeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      {/* Top-left arrow */}
-      <path
-        d="M17 17L7 7M17 17V10M17 17H10"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* Bottom-right arrow */}
-      <path
-        d="M7 7V14M7 7H14"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </SvgIcon>
-  );
-}
 
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
 const restrictiveShapes = ["diamond"];
@@ -167,17 +143,7 @@ function AbstractNode({ data }) {
     width: widthSelectionBoxStyle(data["nodeShape"], size),
     height: heightSelectionBoxStyle(data["nodeShape"], size),
     border: "2px dashed blue",
-    pointerEvents: "none", // Allow clicks to pass through the box
-  };
-
-  const resizeHandleStyles = {
-    width: size.width * 0.2,
-    height: size.height * 0.2,
-    // backgroundColor: "black",
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    cursor: "nwse-resize",
+    cursor: "default",
   };
 
   return (
@@ -189,14 +155,13 @@ function AbstractNode({ data }) {
       className={isResizing ? "nodrag" : ""}
     >
       {/* If the node is selected, show the selection box */}
-      {isSelected && <div style={selectionBoxStyles}></div>}
-      <SelectedNode size={size} />
       {isSelected && (
-        <ResizeIcon
-          style={resizeHandleStyles}
+        <div
+          style={selectionBoxStyles}
           onMouseDownCapture={handleResizeStart}
         />
       )}
+      <SelectedNode size={size} />
     </div>
   );
 }
