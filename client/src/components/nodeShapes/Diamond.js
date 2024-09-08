@@ -1,29 +1,22 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
 
-const contentStyles = {
-  transform: "rotate(-45deg)", // Rotate content back to normal
-};
-
 function Diamond({ size }) {
   const diamondStyles = {
     width: size.width,
     height: size.height,
     backgroundColor: "#eee",
-    // border: "2px solid #222",
+    clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)", // Diamond shape
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    transform: "rotate(45deg)", // Rotate to make a diamond shape
+    position: "relative",
   };
 
   return (
     <div style={diamondStyles}>
-      <div style={contentStyles}>
-        {/* To keep the content upright */}
-        <Handle type="source" position={Position.Bottom} id="a" />
-      </div>
+      <Handle type="source" position={Position.Bottom} id="a" />
     </div>
   );
 }
