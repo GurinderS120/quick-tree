@@ -11,6 +11,7 @@ function Rectangle({ size }) {
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
+    position: "relative",
   };
 
   return (
