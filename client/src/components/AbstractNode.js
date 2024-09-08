@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import nodeShapes from "../NodeShapes";
 
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
-const restrictiveShapes = ["diamond"];
+const restrictiveShapes = [];
 
 function topSelectionBoxStyle(shape, size) {
   if (shape === "diamond") {
-    return -(Math.sqrt(2) * size.height - size.height) / 2 - 5;
+    return -5;
   } else {
     return -5;
   }
@@ -14,7 +14,7 @@ function topSelectionBoxStyle(shape, size) {
 
 function leftSelectionBoxStyle(shape, size) {
   if (shape === "diamond") {
-    return -(Math.sqrt(2) * size.width - size.width) / 2 - 5;
+    return -5;
   } else {
     return -5;
   }
@@ -22,7 +22,7 @@ function leftSelectionBoxStyle(shape, size) {
 
 function widthSelectionBoxStyle(shape, size) {
   if (shape === "diamond") {
-    return Math.sqrt(2) * size.width + 10; // Adjust the width for diamond
+    return size.width + 10;
   } else {
     return size.width + 10;
   }
@@ -30,7 +30,7 @@ function widthSelectionBoxStyle(shape, size) {
 
 function heightSelectionBoxStyle(shape, size) {
   if (shape === "diamond") {
-    return Math.sqrt(2) * size.height + 10; // Adjust the height for diamond
+    return size.height + 10;
   } else {
     return size.height + 10;
   }
