@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   ReactFlow,
   MiniMap,
@@ -9,6 +9,8 @@ import {
   addEdge,
   ControlButton,
   MarkerType,
+  useReactFlow,
+  ReactFlowProvider,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
@@ -33,6 +35,45 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const connectingNodeId = useRef(null);
+  const { screenToFlowPosition } = useReactFlow();
+  const reactFlowWrapper = useRef(null);
+
+  const onConnectStart = useCallback((_, { nodeId }) => {
+    connectingNodeId.current = nodeId;
+    console.log(nodeId);
+  }, []);
+
+  const onConnectEnd = useCallback(
+    (event) => {
+      if (!connectingNodeId.current) return;
+
+      const targetIsPane = event.target.classList.contains("react-flow__pane");
+
+      if (targetIsPane) {
+        // we need to remove the wrapper bounds, in order to get the correct position
+        const id = `${connectingNodeId.current}-${nodes.length + 1}`;
+        const newNode = {
+          id: id,
+          type: "abstractNode",
+          position: screenToFlowPosition({
+            x: event.clientX,
+            y: event.clientY,
+          }),
+          data: {
+            label: `${connectingNodeId.current} Node`,
+            nodeShape: connectingNodeId.current.split("-")[0],
+          },
+        };
+
+        setNodes((nds) => nds.concat(newNode));
+        setEdges((eds) =>
+          eds.concat({ id: id, source: connectingNodeId.current, target: id })
+        );
+      }
+    },
+    [setNodes, setEdges, nodes.length, screenToFlowPosition]
+  );
 
   // adding event handlers without "useCallback" can cause infinite re-renders when
   // using reactFlow
@@ -87,6 +128,8 @@ function App() {
       onMouseMove={handleMouseMove}
       onClick={handleCanvasClick}
       onContextMenu={handleRightClick} // Handle right-click
+      className="wrapper"
+      ref={reactFlowWrapper}
     >
       <ReactFlow
         // use defaultNodes prop helped to solve the "resizeObserver" error
@@ -99,6 +142,8 @@ function App() {
         nodeTypes={nodeTypes}
         connectionMode="loose"
         defaultEdgeOptions={defaultEdgeOptions}
+        onConnectStart={onConnectStart}
+        onConnectEnd={onConnectEnd}
       >
         <Controls position="bottom-left">
           <ControlButton>
@@ -128,4 +173,10 @@ function App() {
   );
 }
 
-export default App;
+export default function Wrapper() {
+  return (
+    <ReactFlowProvider>
+      <App />
+    </ReactFlowProvider>
+  );
+}
