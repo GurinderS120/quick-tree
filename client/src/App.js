@@ -89,10 +89,10 @@ function App() {
         const newNode = {
           id: `${selectedNode.id}-${nodes.length + 1}`,
           type: "abstractNode",
-          position: {
-            x: cursorPosition.x,
-            y: cursorPosition.y,
-          },
+          position: screenToFlowPosition({
+            x: event.clientX,
+            y: event.clientY,
+          }),
           data: {
             label: `${selectedNode.label} Node`,
             nodeShape: selectedNode.id,
@@ -102,7 +102,7 @@ function App() {
         setSelectedNode(null); // Reset after placing the node
       }
     },
-    [selectedNode, cursorPosition, nodes.length, setNodes]
+    [selectedNode, screenToFlowPosition, nodes.length, setNodes]
   );
 
   const handleMouseMove = useCallback((event) => {
