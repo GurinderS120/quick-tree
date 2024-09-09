@@ -78,7 +78,10 @@ function App() {
   // adding event handlers without "useCallback" can cause infinite re-renders when
   // using reactFlow
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => {
+      connectingNodeId.current = null;
+      setEdges((eds) => addEdge(params, eds));
+    },
     [setEdges]
   );
 
