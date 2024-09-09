@@ -28,6 +28,14 @@ const edgeMarker = {
   color: "blue",
 };
 
+// We use this object to define the target edge's end handle based on its source node's start handle - it is primarly used for an edge when we create a new node on edge drop
+const sourceTargetHandle = {
+  "bottom-handle": "top-handle",
+  "right-handle": "left-handle",
+  "top-handle": "top-handle",
+  "left-handle": "right-handle",
+};
+
 const defaultEdgeOptions = { animated: false, markerEnd: edgeMarker };
 
 function App() {
@@ -36,16 +44,18 @@ function App() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const connectingNodeId = useRef(null);
+  const sourceHandleId = useRef(null);
   const { screenToFlowPosition } = useReactFlow();
   const reactFlowWrapper = useRef(null);
 
-  const onConnectStart = useCallback((_, { nodeId }) => {
+  const onConnectStart = useCallback((_, { nodeId, handleId }) => {
     connectingNodeId.current = nodeId;
+    sourceHandleId.current = handleId;
   }, []);
 
   const onConnectEnd = useCallback(
     (event) => {
-      if (!connectingNodeId.current) return;
+      if (!connectingNodeId.current || !sourceHandleId.current) return;
 
       const targetIsPane = event.target.classList.contains("react-flow__pane");
 
@@ -67,7 +77,13 @@ function App() {
 
         setNodes((nds) => nds.concat(newNode));
         setEdges((eds) =>
-          eds.concat({ id: id, source: connectingNodeId.current, target: id })
+          eds.concat({
+            id: id,
+            source: connectingNodeId.current,
+            target: id,
+            sourceHandle: sourceHandleId.current,
+            targetHandle: sourceTargetHandle[sourceHandleId.current],
+          })
         );
       }
     },
