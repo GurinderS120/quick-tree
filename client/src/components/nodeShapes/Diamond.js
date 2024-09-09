@@ -1,7 +1,6 @@
 import React from "react";
-import { Handle, Position } from "@xyflow/react";
 
-function Diamond({ size, isSelected }) {
+function Diamond({ size }) {
   const diamondStyles = {
     width: size.width,
     height: size.height,
@@ -14,22 +13,7 @@ function Diamond({ size, isSelected }) {
     position: "relative",
   };
 
-  return (
-    <div style={diamondStyles}>
-      <Handle
-        style={{ visibility: isSelected ? "visible" : "hidden" }}
-        type="source"
-        position={Position.Bottom}
-        id="a"
-      />
-      <Handle
-        style={{ visibility: isSelected ? "visible" : "hidden" }}
-        type="source"
-        position={Position.Top}
-        id="d"
-      />
-    </div>
-  );
+  return <div style={diamondStyles}></div>;
 }
 
 export default Diamond;

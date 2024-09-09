@@ -1,7 +1,6 @@
 import React from "react";
-import { Handle, Position } from "@xyflow/react";
 
-function Circle({ size, isSelected }) {
+function Circle({ size }) {
   const circleStyles = {
     width: size.width,
     height: size.height,
@@ -15,22 +14,7 @@ function Circle({ size, isSelected }) {
     position: "relative", // For positioning the resize handle
   };
 
-  return (
-    <div style={circleStyles}>
-      <Handle
-        style={{ visibility: isSelected ? "visible" : "hidden" }}
-        type="source"
-        position={Position.Bottom}
-        id="a"
-      />
-      <Handle
-        style={{ visibility: isSelected ? "visible" : "hidden" }}
-        type="source"
-        position={Position.Top}
-        id="d"
-      />
-    </div>
-  );
+  return <div style={circleStyles}></div>;
 }
 
 export default Circle;

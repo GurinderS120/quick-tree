@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import nodeShapes from "../nodeShapes.js";
+import { Handle, Position } from "@xyflow/react";
 
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
 const restrictiveShapes = [];
@@ -140,6 +141,7 @@ function AbstractNode({ data }) {
     height: heightSelectionBoxStyle(data["nodeShape"], size),
     border: "2px dashed blue",
     cursor: "pointer",
+    visibility: isSelected ? "visible" : "hidden",
   };
 
   return (
@@ -151,12 +153,32 @@ function AbstractNode({ data }) {
       className={isResizing ? "nodrag" : ""}
     >
       {/* If the node is selected, show the selection box */}
-      {isSelected && (
-        <div
-          style={selectionBoxStyles}
-          onMouseDownCapture={handleResizeStart}
+      <div style={selectionBoxStyles} onMouseDownCapture={handleResizeStart}>
+        <Handle
+          onMouseDown={() => setIsResizing(false)}
+          type="source"
+          position={Position.Bottom}
+          id="bottom-handle"
         />
-      )}
+        <Handle
+          onMouseDown={() => setIsResizing(false)}
+          type="source"
+          position={Position.Top}
+          id="top-handle"
+        />
+        <Handle
+          onMouseDown={() => setIsResizing(false)}
+          type="source"
+          position={Position.Left}
+          id="left-handle"
+        />
+        <Handle
+          onMouseDown={() => setIsResizing(false)}
+          type="source"
+          position={Position.Right}
+          id="right-handle"
+        />
+      </div>
       {/* isSelected prop will be used to display handles when a node is selected */}
       <SelectedNode size={size} isSelected={isSelected} />
     </div>
