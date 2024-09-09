@@ -179,8 +179,7 @@ function AbstractNode({ data }) {
           id="right-handle"
         />
       </div>
-      {/* isSelected prop will be used to display handles when a node is selected */}
-      <SelectedNode size={size} isSelected={isSelected} />
+      <SelectedNode size={size} />
     </div>
   );
 }
