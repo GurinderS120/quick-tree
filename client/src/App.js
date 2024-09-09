@@ -41,7 +41,6 @@ function App() {
 
   const onConnectStart = useCallback((_, { nodeId }) => {
     connectingNodeId.current = nodeId;
-    console.log(nodeId);
   }, []);
 
   const onConnectEnd = useCallback(
