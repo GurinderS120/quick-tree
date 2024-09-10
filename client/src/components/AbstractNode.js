@@ -177,7 +177,7 @@ function AbstractNode({ data }) {
     >
       {/* If the node is selected, show the selection box */}
       <NodeToolbar position={Position.Top}>
-        <Toolbar sx={{ backgroundColor: "#1e293b" }}>
+        <Toolbar sx={{ backgroundColor: "#1e293b", borderRadius: "15px" }}>
           {nodeColors.map((nodeColor) => (
             <IconButton
               key={nodeColor}
