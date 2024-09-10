@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Handle, Position, NodeToolbar } from "@xyflow/react";
-import { Toolbar, IconButton } from "@mui/material";
+import { Toolbar, IconButton, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
@@ -81,6 +81,8 @@ const nodeColors = [
   "rgb(128, 61, 236)",
 ];
 
+const textColors = ["#ffffff", "#000000"];
+
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
 const restrictiveShapes = [];
 
@@ -125,6 +127,7 @@ function AbstractNode({ data }) {
   const [color, setColor] = useState("rgb(207, 76, 44)");
   const nodeRef = useRef(null);
   const [nodeText, setNodeText] = useState("");
+  const [nodeTextColor, setNodeTextColor] = useState("#ffffff");
 
   const classes = useStyles();
 
@@ -235,20 +238,47 @@ function AbstractNode({ data }) {
     >
       {/* If the node is selected, show the selection box */}
       <NodeToolbar position={Position.Top} offset={13}>
-        <Toolbar sx={{ backgroundColor: "#1e293b", borderRadius: "15px" }}>
-          {nodeColors.map((nodeColor) => (
-            <IconButton
-              key={nodeColor}
-              className={classes.iconButton}
-              sx={{
-                backgroundColor: nodeColor,
-                "&:hover": { backgroundColor: nodeColor },
-                border: nodeColor === color ? "3px solid white" : "none",
-                boxShadow: "0px 0px 5px rgba(0,0,0,0.2)",
-              }}
-              onClick={() => setColor(nodeColor)}
-            />
-          ))}
+        <Toolbar
+          sx={{
+            backgroundColor: "#1e293b",
+            borderRadius: "15px",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          {/* Node color selector */}
+          <Box sx={{ mt: 1 }}>
+            {nodeColors.map((nodeColor) => (
+              <IconButton
+                key={nodeColor}
+                className={classes.iconButton}
+                sx={{
+                  backgroundColor: nodeColor,
+                  "&:hover": { backgroundColor: nodeColor },
+                  border: nodeColor === color ? "3px solid white" : "none",
+                  boxShadow: "0px 0px 5px rgba(0,0,0,0.2)",
+                }}
+                onClick={() => setColor(nodeColor)}
+              />
+            ))}
+          </Box>
+          {/* Node text color selector */}
+          <Box sx={{ mt: 1, mb: 1 }}>
+            {textColors.map((textColor) => (
+              <IconButton
+                key={textColor}
+                className={classes.iconButton}
+                sx={{
+                  backgroundColor: textColor,
+                  "&:hover": { backgroundColor: textColor },
+                  border:
+                    textColor === nodeTextColor ? "3px solid grey" : "none",
+                  boxShadow: "0px 0px 5px rgba(0,0,0,0.2)",
+                }}
+                onClick={() => setNodeTextColor(textColor)}
+              />
+            ))}
+          </Box>
         </Toolbar>
       </NodeToolbar>
       <div style={selectionBoxStyles} onMouseDownCapture={handleResizeStart}>
@@ -288,9 +318,10 @@ function AbstractNode({ data }) {
       >
         <input
           type="text"
-          className={classes.nodeText}
+          className={`${classes.nodeText} no-drag`}
           value={nodeText}
-          placeholder="type..."
+          style={{ color: nodeTextColor }}
+          placeholder="T"
           onChange={(e) => setNodeText(e.target.value)}
         />
       </div>
