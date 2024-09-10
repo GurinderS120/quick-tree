@@ -265,6 +265,7 @@ function AbstractNode({ data }) {
           id="right-handle"
         />
       </div>
+      {/* create a node based on user selected shape */}
       <div
         className={classes[data["nodeShape"]]}
         style={{
