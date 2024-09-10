@@ -63,7 +63,7 @@ function AbstractNode({ data }) {
   const [isSelected, setIsSelected] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [initialMousePosition, setInitialMousePosition] = useState(null);
-  const [color, setColor] = useState("rgb(190, 66, 35)");
+  const [color, setColor] = useState("rgb(207, 76, 44)");
   const nodeRef = useRef(null);
 
   const classes = useStyles();
