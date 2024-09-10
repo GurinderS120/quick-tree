@@ -2,8 +2,8 @@ import React from "react";
 
 function Triangle({ size, color }) {
   const triangleStyles = {
-    width: `${size.width}px`,
-    height: `${size.height}px`,
+    width: size.width,
+    height: size.height,
     backgroundColor: color,
     clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)", // Creates the triangle shape
     position: "relative",
