@@ -176,7 +176,7 @@ function AbstractNode({ data }) {
       className={isResizing ? "nodrag" : ""}
     >
       {/* If the node is selected, show the selection box */}
-      <NodeToolbar position={Position.Top}>
+      <NodeToolbar position={Position.Top} offset={13}>
         <Toolbar sx={{ backgroundColor: "#1e293b", borderRadius: "15px" }}>
           {nodeColors.map((nodeColor) => (
             <IconButton
