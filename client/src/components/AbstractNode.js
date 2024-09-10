@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import nodeShapes from "../nodeShapes.js";
 import { Handle, Position, NodeToolbar } from "@xyflow/react";
 import { Toolbar, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -10,6 +9,55 @@ const useStyles = makeStyles({
     height: "40px",
     borderRadius: "50%",
     margin: "5px",
+  },
+  circle: {
+    borderRadius: "50%",
+    // border: "2px solid #222",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    position: "relative", // For positioning the resize handle
+  },
+  diamond: {
+    clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)", // Diamond shape
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    position: "relative",
+  },
+  hexagon: {
+    clipPath: "polygon(50% 0%, 90% 20%, 90% 80%, 50% 100%, 10% 80%, 10% 20%)", // Creates the hexagon shape
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  rectangle: {
+    // border: "2px solid #222",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    position: "relative",
+  },
+  roundedRectangle: {
+    // border: "2px solid #222",
+    borderRadius: "15px", // Rounded corners
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    position: "relative",
+  },
+  triangle: {
+    clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)", // Creates the triangle shape
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
@@ -67,8 +115,6 @@ function AbstractNode({ data }) {
   const nodeRef = useRef(null);
 
   const classes = useStyles();
-
-  const SelectedNode = nodeShapes[data["nodeShape"]];
 
   // Handle the start of resizing (when the user clicks on the resize handle)
   const handleResizeStart = (e) => {
@@ -219,7 +265,14 @@ function AbstractNode({ data }) {
           id="right-handle"
         />
       </div>
-      <SelectedNode size={size} color={color} />
+      <div
+        className={classes[data["nodeShape"]]}
+        style={{
+          width: size.width,
+          height: size.height,
+          backgroundColor: color,
+        }}
+      ></div>
     </div>
   );
 }
