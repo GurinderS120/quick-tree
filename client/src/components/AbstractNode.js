@@ -1,6 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import nodeShapes from "../nodeShapes.js";
-import { Handle, Position } from "@xyflow/react";
+import { Handle, Position, NodeToolbar } from "@xyflow/react";
+import { Toolbar, IconButton } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  iconButton: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    margin: "5px",
+    border: "none",
+  },
+});
 
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
 const restrictiveShapes = [];
@@ -44,6 +56,8 @@ function AbstractNode({ data }) {
   const [isResizing, setIsResizing] = useState(false);
   const [initialMousePosition, setInitialMousePosition] = useState(null);
   const nodeRef = useRef(null);
+
+  const classes = useStyles();
 
   const SelectedNode = nodeShapes[data["nodeShape"]];
 
@@ -153,6 +167,55 @@ function AbstractNode({ data }) {
       className={isResizing ? "nodrag" : ""}
     >
       {/* If the node is selected, show the selection box */}
+      <NodeToolbar
+        position={Position.Top}
+        isVisible={isSelected ? true : false}
+      >
+        <Toolbar>
+          <IconButton
+            className={classes.iconButton}
+            sx={{
+              backgroundColor: "rgb(207, 76, 44)",
+              "&:hover": { backgroundColor: "rgb(190, 66, 35)" },
+            }}
+          ></IconButton>
+          <IconButton
+            className={classes.iconButton}
+            sx={{
+              backgroundColor: "rgb(234, 156, 65)",
+              "&:hover": { backgroundColor: "rgb(220, 140, 55)" },
+            }}
+          ></IconButton>
+          <IconButton
+            className={classes.iconButton}
+            sx={{
+              backgroundColor: "rgb(235, 195, 71)",
+              "&:hover": { backgroundColor: "rgb(220, 180, 60)" },
+            }}
+          ></IconButton>
+          <IconButton
+            className={classes.iconButton}
+            sx={{
+              backgroundColor: "rgb(67, 141, 87)",
+              "&:hover": { backgroundColor: "rgb(57, 125, 75)" },
+            }}
+          ></IconButton>
+          <IconButton
+            className={classes.iconButton}
+            sx={{
+              backgroundColor: "rgb(63, 138, 226)",
+              "&:hover": { backgroundColor: "rgb(50, 120, 200)" },
+            }}
+          ></IconButton>
+          <IconButton
+            className={classes.iconButton}
+            sx={{
+              backgroundColor: "rgb(128, 61, 236)",
+              "&:hover": { backgroundColor: "rgb(110, 50, 220)" },
+            }}
+          ></IconButton>
+        </Toolbar>
+      </NodeToolbar>
       <div style={selectionBoxStyles} onMouseDownCapture={handleResizeStart}>
         <Handle
           onMouseDown={() => setIsResizing(false)}
