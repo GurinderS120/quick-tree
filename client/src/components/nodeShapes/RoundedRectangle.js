@@ -1,10 +1,10 @@
 import React from "react";
 
-function RoundedRectangle({ size }) {
+function RoundedRectangle({ size, color }) {
   const roundedRectangleStyles = {
     width: size.width,
     height: size.height,
-    backgroundColor: "#eee",
+    backgroundColor: color,
     // border: "2px solid #222",
     borderRadius: "15px", // Rounded corners
     display: "flex",

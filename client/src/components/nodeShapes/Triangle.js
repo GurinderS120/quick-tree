@@ -1,10 +1,10 @@
 import React from "react";
 
-function Triangle({ size }) {
+function Triangle({ size, color }) {
   const triangleStyles = {
     width: `${size.width}px`,
     height: `${size.height}px`,
-    backgroundColor: "#eee",
+    backgroundColor: color,
     clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)", // Creates the triangle shape
     position: "relative",
     display: "flex",

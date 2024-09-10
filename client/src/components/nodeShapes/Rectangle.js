@@ -1,10 +1,10 @@
 import React from "react";
 
-function Rectangle({ size }) {
+function Rectangle({ size, color }) {
   const rectangleStyles = {
     width: size.width,
     height: size.height,
-    backgroundColor: "#eee",
+    backgroundColor: color,
     // border: "2px solid #222",
     display: "flex",
     alignItems: "center",

@@ -1,11 +1,11 @@
 import React from "react";
 
-function Circle({ size }) {
+function Circle({ size, color }) {
   const circleStyles = {
     width: size.width,
     height: size.height,
     borderRadius: "50%",
-    backgroundColor: "#eee",
+    backgroundColor: color,
     // border: "2px solid #222",
     display: "flex",
     alignItems: "center",

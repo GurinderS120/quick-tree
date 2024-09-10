@@ -1,10 +1,10 @@
 import React from "react";
 
-function Diamond({ size }) {
+function Diamond({ size, color }) {
   const diamondStyles = {
     width: size.width,
     height: size.height,
-    backgroundColor: "#eee",
+    backgroundColor: color,
     clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)", // Diamond shape
     display: "flex",
     alignItems: "center",
