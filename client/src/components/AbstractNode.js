@@ -318,7 +318,7 @@ function AbstractNode({ data }) {
       >
         <input
           type="text"
-          className={`${classes.nodeText} no-drag`}
+          className={`${classes.nodeText} nodrag`}
           value={nodeText}
           style={{ color: nodeTextColor }}
           placeholder="T"
