@@ -10,9 +10,17 @@ const useStyles = makeStyles({
     height: "40px",
     borderRadius: "50%",
     margin: "5px",
-    border: "none",
   },
 });
+
+const nodeColors = [
+  "rgb(207, 76, 44)",
+  "rgb(234, 156, 65)",
+  "rgb(235, 195, 71)",
+  "rgb(67, 141, 87)",
+  "rgb(63, 138, 226)",
+  "rgb(128, 61, 236)",
+];
 
 // We use this array to keep track of shapes whose widths and heights must maintain an aspect ratio
 const restrictiveShapes = [];
@@ -55,6 +63,7 @@ function AbstractNode({ data }) {
   const [isSelected, setIsSelected] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [initialMousePosition, setInitialMousePosition] = useState(null);
+  const [color, setColor] = useState("rgb(190, 66, 35)");
   const nodeRef = useRef(null);
 
   const classes = useStyles();
@@ -169,48 +178,19 @@ function AbstractNode({ data }) {
       {/* If the node is selected, show the selection box */}
       <NodeToolbar position={Position.Top}>
         <Toolbar sx={{ backgroundColor: "#1e293b" }}>
-          <IconButton
-            className={classes.iconButton}
-            sx={{
-              backgroundColor: "rgb(207, 76, 44)",
-              "&:hover": { backgroundColor: "rgb(190, 66, 35)" },
-            }}
-          ></IconButton>
-          <IconButton
-            className={classes.iconButton}
-            sx={{
-              backgroundColor: "rgb(234, 156, 65)",
-              "&:hover": { backgroundColor: "rgb(220, 140, 55)" },
-            }}
-          ></IconButton>
-          <IconButton
-            className={classes.iconButton}
-            sx={{
-              backgroundColor: "rgb(235, 195, 71)",
-              "&:hover": { backgroundColor: "rgb(220, 180, 60)" },
-            }}
-          ></IconButton>
-          <IconButton
-            className={classes.iconButton}
-            sx={{
-              backgroundColor: "rgb(67, 141, 87)",
-              "&:hover": { backgroundColor: "rgb(57, 125, 75)" },
-            }}
-          ></IconButton>
-          <IconButton
-            className={classes.iconButton}
-            sx={{
-              backgroundColor: "rgb(63, 138, 226)",
-              "&:hover": { backgroundColor: "rgb(50, 120, 200)" },
-            }}
-          ></IconButton>
-          <IconButton
-            className={classes.iconButton}
-            sx={{
-              backgroundColor: "rgb(128, 61, 236)",
-              "&:hover": { backgroundColor: "rgb(110, 50, 220)" },
-            }}
-          ></IconButton>
+          {nodeColors.map((nodeColor) => (
+            <IconButton
+              key={nodeColor}
+              className={classes.iconButton}
+              sx={{
+                backgroundColor: nodeColor,
+                "&:hover": { backgroundColor: nodeColor },
+                border: nodeColor === color ? "3px solid white" : "none",
+                boxShadow: "0px 0px 5px rgba(0,0,0,0.2)",
+              }}
+              onClick={() => setColor(nodeColor)}
+            />
+          ))}
         </Toolbar>
       </NodeToolbar>
       <div style={selectionBoxStyles} onMouseDownCapture={handleResizeStart}>
@@ -239,7 +219,7 @@ function AbstractNode({ data }) {
           id="right-handle"
         />
       </div>
-      <SelectedNode size={size} />
+      <SelectedNode size={size} color={color} />
     </div>
   );
 }
