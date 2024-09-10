@@ -167,11 +167,8 @@ function AbstractNode({ data }) {
       className={isResizing ? "nodrag" : ""}
     >
       {/* If the node is selected, show the selection box */}
-      <NodeToolbar
-        position={Position.Top}
-        isVisible={isSelected ? true : false}
-      >
-        <Toolbar>
+      <NodeToolbar position={Position.Top}>
+        <Toolbar sx={{ backgroundColor: "#1e293b" }}>
           <IconButton
             className={classes.iconButton}
             sx={{
