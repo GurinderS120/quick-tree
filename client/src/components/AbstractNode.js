@@ -59,6 +59,17 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
   },
+  nodeText: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+    "text-align": "center",
+    background: "none",
+    border: "none",
+    outline: "none",
+    "box-shadow": "none",
+  },
 });
 
 const nodeColors = [
@@ -113,6 +124,7 @@ function AbstractNode({ data }) {
   const [initialMousePosition, setInitialMousePosition] = useState(null);
   const [color, setColor] = useState("rgb(207, 76, 44)");
   const nodeRef = useRef(null);
+  const [nodeText, setNodeText] = useState("");
 
   const classes = useStyles();
 
@@ -273,7 +285,15 @@ function AbstractNode({ data }) {
           height: size.height,
           backgroundColor: color,
         }}
-      ></div>
+      >
+        <input
+          type="text"
+          className={classes.nodeText}
+          value={nodeText}
+          placeholder="type..."
+          onChange={(e) => setNodeText(e.target.value)}
+        />
+      </div>
     </div>
   );
 }
