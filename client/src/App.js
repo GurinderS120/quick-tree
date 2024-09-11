@@ -11,7 +11,11 @@ import {
   MarkerType,
   useReactFlow,
   ReactFlowProvider,
+  Panel,
+  getNodesBounds,
+  getViewportForBounds,
 } from "@xyflow/react";
+import { toPng } from "html-to-image";
 
 import "@xyflow/react/dist/style.css";
 
@@ -38,6 +42,17 @@ const sourceTargetHandle = {
 
 const defaultEdgeOptions = { animated: false, markerEnd: edgeMarker };
 
+function downloadImage(dataUrl) {
+  const a = document.createElement("a");
+
+  a.setAttribute("download", "reactflow.png");
+  a.setAttribute("href", dataUrl);
+  a.click();
+}
+
+const imageWidth = 1920;
+const imageHeight = 1080;
+
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -47,6 +62,8 @@ function App() {
   const sourceHandleId = useRef(null);
   const { screenToFlowPosition } = useReactFlow();
   const reactFlowWrapper = useRef(null);
+
+  const { getNodes } = useReactFlow();
 
   const onConnectStart = useCallback((_, { nodeId, handleId }) => {
     connectingNodeId.current = nodeId;
@@ -99,6 +116,31 @@ function App() {
     },
     [setEdges]
   );
+
+  const handleDownloadImage = useCallback(() => {
+    // we calculate a transform for the nodes so that all nodes are visible
+    // we then overwrite the transform of the `.react-flow__viewport` element
+    // with the style option of the html-to-image library
+    const nodesBounds = getNodesBounds(getNodes());
+    const viewport = getViewportForBounds(
+      nodesBounds,
+      imageWidth,
+      imageHeight,
+      0.5,
+      2
+    );
+
+    toPng(document.querySelector(".react-flow__viewport"), {
+      backgroundColor: "#ffffff",
+      width: imageWidth,
+      height: imageHeight,
+      style: {
+        width: imageWidth,
+        height: imageHeight,
+        transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+      },
+    }).then(downloadImage);
+  }, [getNodes]);
 
   // Handle node creation when clicking on the canvas
   const handleCanvasClick = useCallback(
@@ -163,6 +205,11 @@ function App() {
         onConnectStart={onConnectStart}
         onConnectEnd={onConnectEnd}
       >
+        <Panel position="top-left">
+          <button className="download-btn" onClick={handleDownloadImage}>
+            Download Image
+          </button>
+        </Panel>
         <Controls position="bottom-left">
           <ControlButton>
             <ShapeSelector setSelectedNode={setSelectedNode} />
