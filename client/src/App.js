@@ -26,8 +26,10 @@ import Box from "@mui/material/Box";
 
 import ShapeSelector from "./components/ShapeSelector.js";
 import AbstractNode from "./components/AbstractNode.js";
+import CustomEdge from "./components/CustomEdge.js";
 
 const nodeTypes = { abstractNode: AbstractNode };
+const edgeTypes = { customEdge: CustomEdge };
 
 // We can use this object to define an edge's starting and or ending characteristics
 const edgeMarker = {
@@ -102,6 +104,7 @@ function App() {
             id: id,
             source: connectingNodeId.current,
             target: id,
+            type: "customEdge",
             sourceHandle: sourceHandleId.current,
             targetHandle: sourceTargetHandle[sourceHandleId.current],
           })
@@ -152,6 +155,7 @@ function App() {
   const onConnect = useCallback(
     (params) => {
       connectingNodeId.current = null;
+      params["type"] = "customEdge";
       setEdges((eds) => addEdge(params, eds));
     },
     [setEdges]
@@ -241,6 +245,7 @@ function App() {
         // onConnect allows us to connect nodes manually via an edge
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         connectionMode="loose"
         defaultEdgeOptions={defaultEdgeOptions}
         onConnectStart={onConnectStart}
