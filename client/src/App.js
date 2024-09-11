@@ -14,6 +14,9 @@ import {
   Panel,
   getNodesBounds,
   getViewportForBounds,
+  getIncomers,
+  getOutgoers,
+  getConnectedEdges,
 } from "@xyflow/react";
 import { toPng } from "html-to-image";
 
@@ -106,6 +109,42 @@ function App() {
       }
     },
     [setNodes, setEdges, nodes.length, screenToFlowPosition]
+  );
+
+  // This event handler is responsible for connecting deleted node(s)'s source with targets
+  const onNodesDelete = useCallback(
+    (deleted) => {
+      setEdges(
+        deleted.reduce((acc, node) => {
+          const incomers = getIncomers(node, nodes, edges);
+          const outgoers = getOutgoers(node, nodes, edges);
+          const connectedEdges = getConnectedEdges([node], edges);
+
+          // Need to extract the sourceHandle and targetHandle of the edge connecting current node's parent to current node, and then use them in our new edge, connecting the current node's parent node to current node's child node
+          const sourceHandle = connectedEdges[0]["sourceHandle"];
+          const targetHandle = connectedEdges[0]["targetHandle"];
+
+          const remainingEdges = acc.filter(
+            (edge) => !connectedEdges.includes(edge)
+          );
+
+          const createdEdges = incomers.flatMap(({ id: source }) =>
+            outgoers.map(({ id: target }) => ({
+              id: `${source}->${target}`,
+              source,
+              target,
+              sourceHandle,
+              targetHandle,
+            }))
+          );
+
+          // console.log(createdEdges);
+
+          return [...remainingEdges, ...createdEdges];
+        }, edges)
+      );
+    },
+    [nodes, edges, setEdges]
   );
 
   // adding event handlers without "useCallback" can cause infinite re-renders when
@@ -206,6 +245,7 @@ function App() {
         defaultEdgeOptions={defaultEdgeOptions}
         onConnectStart={onConnectStart}
         onConnectEnd={onConnectEnd}
+        onNodesDelete={onNodesDelete}
       >
         <Panel position="top-left">
           <button className="download-btn" onClick={handleDownloadImage}>
