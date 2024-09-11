@@ -128,6 +128,7 @@ function AbstractNode({ data }) {
   const nodeRef = useRef(null);
   const [nodeText, setNodeText] = useState("");
   const [nodeTextColor, setNodeTextColor] = useState("#ffffff");
+  const [nodeImage, setNodeImage] = useState("");
 
   const classes = useStyles();
 
@@ -217,6 +218,21 @@ function AbstractNode({ data }) {
     setIsSelected(true); // Set node as selected
   };
 
+  const handleFileUpload = (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile && selectedFile.type.startsWith("image/")) {
+      if (nodeImage) {
+        URL.revokeObjectURL(nodeImage);
+      }
+      // Create a preview of the image
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setNodeImage(objectUrl);
+    } else {
+      alert("Please upload a valid image file.");
+    }
+  };
+
   const selectionBoxStyles = {
     position: "absolute",
     top: topSelectionBoxStyle(data["nodeShape"], size),
@@ -244,6 +260,7 @@ function AbstractNode({ data }) {
             borderRadius: "15px",
             flexDirection: "column",
             alignItems: "flex-start",
+            pb: 1,
           }}
         >
           {/* Node color selector */}
@@ -263,7 +280,7 @@ function AbstractNode({ data }) {
             ))}
           </Box>
           {/* Node text color selector */}
-          <Box sx={{ mt: 1, mb: 1 }}>
+          <Box sx={{ mt: 1 }}>
             {textColors.map((textColor) => (
               <IconButton
                 key={textColor}
@@ -278,6 +295,10 @@ function AbstractNode({ data }) {
                 onClick={() => setNodeTextColor(textColor)}
               />
             ))}
+          </Box>
+          {/* Allow users to add an image */}
+          <Box sx={{ mt: 1 }}>
+            <input type="file" accept="image/*" onChange={handleFileUpload} />
           </Box>
         </Toolbar>
       </NodeToolbar>
@@ -323,6 +344,11 @@ function AbstractNode({ data }) {
           style={{ color: nodeTextColor }}
           placeholder="T"
           onChange={(e) => setNodeText(e.target.value)}
+        />
+        <img
+          src={nodeImage}
+          alt=""
+          style={{ maxWidth: "100%", height: "auto" }}
         />
       </div>
     </div>
