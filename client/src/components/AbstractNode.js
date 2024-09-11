@@ -116,10 +116,9 @@ function heightSelectionBoxStyle(shape, size) {
   }
 }
 
-// ReactFlow passes the data object as a prop
-function AbstractNode({ data }) {
+// ReactFlow wraps the custom node with base node that provides several helpful props
+function AbstractNode({ id, data, selected }) {
   const [size, setSize] = useState({ width: 100, height: 100 });
-  const [isSelected, setIsSelected] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [initialMousePosition, setInitialMousePosition] = useState(null);
   const [color, setColor] = useState("rgb(207, 76, 44)");
@@ -171,9 +170,9 @@ function AbstractNode({ data }) {
   const handleDeleteNode = useCallback(() => {
     // deleteElements also returns a promise with deleted nodes and edges
     if (reactFlow) {
-      reactFlow.deleteElements({ nodes: [{ id: data.id }] });
+      reactFlow.deleteElements({ nodes: [{ id: id }] });
     }
-  }, [reactFlow, data]);
+  }, [reactFlow, id]);
 
   // Handle mouse up (stops resizing)
   const handleMouseUp = useCallback(() => {
@@ -198,34 +197,6 @@ function AbstractNode({ data }) {
     };
   }, [isResizing, handleMouseMove, handleMouseUp]);
 
-  // Detect clicks outside of the node to unselect it
-  const handleClickOutside = useCallback(
-    (event) => {
-      if (nodeRef.current && !nodeRef.current.contains(event.target)) {
-        setIsSelected(false); // Deselect the node when clicking outside
-      }
-    },
-    [nodeRef]
-  );
-
-  // Add/remove event listeners for mousedown, which is used to check if a user clicked outside the selected node - for now this only works if a user uses right-mouse click, since ReactFlow interally uses the left-mouse click
-  useEffect(() => {
-    if (isSelected) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      if (isSelected) {
-        document.removeEventListener("mousedown", handleClickOutside);
-      }
-    };
-  }, [isSelected, handleClickOutside]);
-
-  // Handle node selection when clicked
-  const handleNodeClick = (e) => {
-    setIsSelected(true); // Set node as selected
-  };
-
   const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
 
@@ -249,14 +220,13 @@ function AbstractNode({ data }) {
     height: heightSelectionBoxStyle(data["nodeShape"], size),
     border: "2px dashed blue",
     cursor: "pointer",
-    visibility: isSelected ? "visible" : "hidden",
+    visibility: selected ? "visible" : "hidden",
   };
 
   return (
     <div
       style={{ position: "relative" }}
       ref={nodeRef}
-      onClick={handleNodeClick}
       // "nodrag" class prevents the ReactFlow from moving the node that we are trying to resize
       className={isResizing ? "nodrag" : ""}
     >
