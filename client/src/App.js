@@ -89,6 +89,7 @@ function App() {
           data: {
             label: `${connectingNodeId.current} Node`,
             nodeShape: connectingNodeId.current.split("-")[0],
+            id: id,
           },
         };
 
@@ -156,6 +157,7 @@ function App() {
           data: {
             label: `${selectedNode.label} Node`,
             nodeShape: selectedNode.id,
+            id: `${selectedNode.id}-${nodes.length + 1}`,
           },
         };
         setNodes((nds) => nds.concat(newNode));

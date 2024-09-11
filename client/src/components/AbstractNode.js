@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Handle, Position, NodeToolbar } from "@xyflow/react";
+import { Handle, Position, NodeToolbar, useReactFlow } from "@xyflow/react";
 import { Toolbar, IconButton, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
@@ -130,6 +130,8 @@ function AbstractNode({ data }) {
 
   const classes = useStyles();
 
+  const reactFlow = useReactFlow();
+
   // Handle the start of resizing (when the user clicks on the resize handle)
   const handleResizeStart = (e) => {
     setIsResizing(true);
@@ -164,6 +166,14 @@ function AbstractNode({ data }) {
     },
     [isResizing, initialMousePosition, data]
   );
+
+  // Handle the deletion of clicked node
+  const handleDeleteNode = useCallback(() => {
+    // deleteElements also returns a promise with deleted nodes and edges
+    if (reactFlow) {
+      reactFlow.deleteElements({ nodes: [{ id: data.id }] });
+    }
+  }, [reactFlow, data]);
 
   // Handle mouse up (stops resizing)
   const handleMouseUp = useCallback(() => {
@@ -297,6 +307,12 @@ function AbstractNode({ data }) {
           {/* Allow users to add an image */}
           <Box sx={{ mt: 1 }}>
             <input type="file" accept="image/*" onChange={handleFileUpload} />
+          </Box>
+          {/* Allow users to delete their node */}
+          <Box sx={{ mt: 1 }}>
+            <button type="button" onClick={handleDeleteNode}>
+              Delete node
+            </button>
           </Box>
         </Toolbar>
       </NodeToolbar>
