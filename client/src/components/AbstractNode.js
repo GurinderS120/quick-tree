@@ -11,13 +11,12 @@ const useStyles = makeStyles({
     margin: "5px",
   },
   circle: {
-    borderRadius: "50%",
-    // border: "2px solid #222",
+    clipPath: "circle(50%)", // Creates a circular shape
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    position: "relative", // For positioning the resize handle
+    position: "relative",
   },
   diamond: {
     clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)", // Diamond shape
@@ -36,7 +35,7 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
   rectangle: {
-    // border: "2px solid #222",
+    clipPath: "inset(0%)", // Creates a rectangular shape
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -44,8 +43,7 @@ const useStyles = makeStyles({
     position: "relative",
   },
   roundedRectangle: {
-    // border: "2px solid #222",
-    borderRadius: "15px", // Rounded corners
+    clipPath: "inset(0% round 15px)", // Creates a rounded rectangle with a 15px radius
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -345,11 +343,7 @@ function AbstractNode({ data }) {
           placeholder="T"
           onChange={(e) => setNodeText(e.target.value)}
         />
-        <img
-          src={nodeImage}
-          alt=""
-          style={{ maxWidth: "100%", height: "auto" }}
-        />
+        <img src={nodeImage} alt="" style={{ width: "100%", height: "100%" }} />
       </div>
     </div>
   );
