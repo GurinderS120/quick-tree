@@ -343,7 +343,13 @@ function AbstractNode({ data }) {
           placeholder="T"
           onChange={(e) => setNodeText(e.target.value)}
         />
-        <img src={nodeImage} alt="" style={{ width: "100%", height: "100%" }} />
+        {nodeImage && (
+          <img
+            src={nodeImage}
+            alt=""
+            style={{ width: "100%", height: "100%" }}
+          />
+        )}
       </div>
     </div>
   );
