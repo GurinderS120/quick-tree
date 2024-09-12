@@ -45,7 +45,11 @@ const sourceTargetHandle = {
   "left-handle": "right-handle",
 };
 
-const defaultEdgeOptions = { animated: false, markerEnd: edgeMarker };
+const defaultEdgeOptions = {
+  animated: false,
+  markerEnd: edgeMarker,
+  type: "customEdge",
+};
 
 function downloadImage(dataUrl) {
   const a = document.createElement("a");
@@ -104,7 +108,6 @@ function App() {
             id: id,
             source: connectingNodeId.current,
             target: id,
-            type: "customEdge",
             sourceHandle: sourceHandleId.current,
             targetHandle: sourceTargetHandle[sourceHandleId.current],
           })
@@ -155,7 +158,6 @@ function App() {
   const onConnect = useCallback(
     (params) => {
       connectingNodeId.current = null;
-      params["type"] = "customEdge";
       setEdges((eds) => addEdge(params, eds));
     },
     [setEdges]
