@@ -1,4 +1,3 @@
-import React from "react";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -19,6 +18,7 @@ function CustomEdge({
   targetPosition,
   style = {},
   markerEnd,
+  selected,
 }) {
   const { setEdges } = useReactFlow();
   const [edgePath, labelX, labelY] = getBezierPath({
@@ -36,7 +36,7 @@ function CustomEdge({
 
   return (
     <>
-      <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
+      <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} />
       <EdgeLabelRenderer>
         <div
           style={{
@@ -49,22 +49,24 @@ function CustomEdge({
           }}
           className="nodrag nopan"
         >
-          <IconButton
-            sx={{
-              width: 20,
-              height: 20,
-              background: "#eee",
-              border: "1px solid #fff",
-              cursor: "pointer",
-              borderRadius: "50%",
-              fontSize: 12,
-              lineHeight: 1,
-              "&:hover": { boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.08)" },
-            }}
-            onClick={onEdgeClick}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
+          {selected && (
+            <IconButton
+              sx={{
+                width: 20,
+                height: 20,
+                background: "#eee",
+                border: "1px solid #fff",
+                cursor: "pointer",
+                borderRadius: "50%",
+                fontSize: 12,
+                lineHeight: 1,
+                "&:hover": { boxShadow: "0 0 6px 2px rgba(0, 0, 0, 0.08)" },
+              }}
+              onClick={onEdgeClick}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          )}
         </div>
       </EdgeLabelRenderer>
     </>
