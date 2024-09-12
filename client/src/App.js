@@ -126,9 +126,14 @@ function App() {
           const outgoers = getOutgoers(node, nodes, edges);
           const connectedEdges = getConnectedEdges([node], edges);
 
-          // Need to extract the sourceHandle and targetHandle of the edge connecting current node's parent to current node, and then use them in our new edge, connecting the current node's parent node to current node's child node
-          const sourceHandle = connectedEdges[0]["sourceHandle"];
-          const targetHandle = connectedEdges[0]["targetHandle"];
+          let sourceHandle = "";
+          let targetHandle = "";
+
+          if (connectedEdges.length > 0) {
+            // Need to extract the sourceHandle and targetHandle of the edge connecting current node's parent to current node, and then use them in our new edge, connecting the current node's parent node to current node's child node
+            sourceHandle = connectedEdges[0]["sourceHandle"];
+            targetHandle = connectedEdges[0]["targetHandle"];
+          }
 
           const remainingEdges = acc.filter(
             (edge) => !connectedEdges.includes(edge)
